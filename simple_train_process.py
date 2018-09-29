@@ -2,8 +2,15 @@
 
 import tensorflow as tf
 
+
 # Numpy是一个科学计算的工具包，这里通过NumPy工具包生成模拟数据集
 from numpy.random import RandomState
+
+print "训练神经网络的步骤："
+print "1. 定义神经网络的结构和前向传播的输出结果"
+print "2. 定义损失函数及选择反向传播优化算法"
+print "3. 生成会话并且在训练数据上反复运行反向传播优化算法"
+
 # 每批训练数据集大小
 batch_size = 8
 
