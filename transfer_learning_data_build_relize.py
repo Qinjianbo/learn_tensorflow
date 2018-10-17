@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.platform import gfile
 
+# 说明：该文件可运行，但是内存占用太大，导致本机无法执行
 # 数据下载地址
 # wget http://download.tensorflow.org/example_images/flower_photos.tgz
 # tar xzf flower_photos.tgz
