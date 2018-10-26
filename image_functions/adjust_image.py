@@ -41,3 +41,29 @@ with tf.Session() as sess:
         f.write(adjusted_brightness_bright.eval())
     with tf.gfile.GFile("./brightness_random_rose.jpg", "wb") as f:
         f.write(adjusted_brightness_random.eval())
+
+    
+    # 将图像对比度减少到0.5倍
+    adjusted_contrast_05 = tf.image.adjust_contrast(image_data, 0.5)
+    # 将图像对比度调整到5倍
+    adjusted_contrast_5 = tf.image.adjust_contrast(image_data, 5)
+    # 将对比度进行随机调整
+    adjusted_contrast_random = tf.image.random_contrast(image_data, 1, 5)
+    # 截断调整
+    adjusted_contrast_05 = tf.clip_by_value(adjusted_contrast_05, 0.0, 1.0)
+    adjusted_contrast_5 = tf.clip_by_value(adjusted_contrast_5, 0.0, 1.0)
+    adjusted_contrast_random = tf.clip_by_value(adjusted_contrast_random, 0.0, 1.0)
+    # 转换数据类型为整数型
+    adjusted_contrast_05 = tf.image.convert_image_dtype(adjusted_contrast_05, dtype=tf.uint8)
+    adjusted_contrast_5 = tf.image.convert_image_dtype(adjusted_contrast_5, dtype=tf.uint8)
+    adjusted_contrast_random = tf.image.convert_image_dtype(adjusted_contrast_random, dtype=tf.uint8)
+    # 编码
+    adjusted_contrast_05 = tf.image.encode_jpeg(adjusted_contrast_05.eval())
+    adjusted_contrast_5 = tf.image.encode_jpeg(adjusted_contrast_5.eval())
+    adjusted_contrast_random = tf.image.encode_jpeg(adjusted_contrast_random.eval())
+    with tf.gfile.GFile("./contrast_05_rose.jpg", "wb") as f:
+        f.write(adjusted_contrast_05.eval())
+    with tf.gfile.GFile("./contrast_5_rose.jpg", "wb") as f:
+        f.write(adjusted_contrast_5.eval())
+    with tf.gfile.GFile("./contrast_random_rose.jgp", "wb") as f:
+        f.write(adjusted_contrast_random.eval())
