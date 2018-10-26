@@ -18,9 +18,9 @@ with tf.Session() as sess:
     # 对图像沿着对角线进行翻转
     flipped_transpose = tf.image.transpose_image(image_data)
     # 对图像进行随机上下翻转
-    random_flipped_up_down = tf.image.random_flip_up_down(image)
+    random_flipped_up_down = tf.image.random_flip_up_down(image_data)
     # 对图像进行随机左右翻转
-    random_flipped_left_right = tf.image_random_flip_left_right(image)
+    random_flipped_left_right = tf.image.random_flip_left_right(image_data)
 
     # 转换类型为整型
     flipped_up_down = tf.image.convert_image_dtype(flipped_up_down, dtype=tf.uint8)
