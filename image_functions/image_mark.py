@@ -35,3 +35,24 @@ with tf.Session() as sess:
     # 图像输出到文件
     with tf.gfile.GFile('./bounding_rose.jpg', 'wb') as f:
         f.write(bounding.eval())
+
+    
+    
+    # 可通过提供标注的方式来告诉随机截图的算法哪部分是“有信息量”的
+    # min_object_convered = 0.4 表示截取部分至少包含某个标注框40%的内容
+    begin,size,bbox_for_draw = tf.image.sample_distorted_bounding_box(
+        tf.shape(image_data), bounding_boxes=boxes, min_object_covered=0.4)
+
+    # 通过标注框可视化随机取得的图像。
+    # 把图像数据升维
+    batched = tf.expand_dims(image_data, 0)
+    image_with_box = tf.image.draw_bounding_boxes(batched, boxes, bbox_for_draw)
+    # 编码图像
+    encoded_bounding = tf.image.encode_jpeg(image_with_box.eval())
+    with tf.gfile.GFile('./bounding_with_box_rose.jpg', 'wb') as f:
+        f.write(encoded_bounding.eval())
+    # 截取随机出来的图像。因为算法是随机的，所以每次取得的结果会是不一样的
+    distorted_image = tf.slice(image_data, begin, size)
+    encoded_distorted_image = tf.image.encode_jpeg(distored_image.eval())
+    with tf.gfile.GFile('./distorted_rose.jpg', 'wb') as f:
+        f.write(encoded_distorted_image.eval())
